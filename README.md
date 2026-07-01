@@ -43,3 +43,32 @@ src/
 tests/
    test_cases.cpp   - Chứa 5 kịch bản kiểm thử tự động
 README.md           - Tài liệu báo cáo project
+
+# Abyss-Walker-CLI (Đồ án Giải Mê Cung)
+
+## 1. Giới thiệu chi tiết đồ án
+- **Sản phẩm:** Game sinh mê cung và tìm đường tự động trên giao diện Terminal (Console).
+- **Cốt lõi:** Sử dụng mảng 2 chiều (Graph) để tạo bản đồ. Áp dụng 3 thuật toán duyệt đồ thị (DFS, BFS, A*) để đục tường tạo đường đi và tìm lối thoát.
+- **Điểm nhấn:** Menu cho phép người dùng tự chơi, hoặc chạy máy tự động để so sánh hiệu năng (số bước đi) giữa các thuật toán với nhau.
+
+## 2. Lý do chọn đề tài
+- Để trực quan hóa các cấu trúc dữ liệu khô khan: Nhìn thấy được `Stack` và `Queue` chạy trên màn hình thực tế ra sao thay vì chỉ in ra các con số.
+- Để hiểu bản chất của các ứng dụng chỉ đường (như Google Maps): Trả lời được câu hỏi tại sao phải dùng BFS hoặc A* để tìm đường, chứ tuyệt đối không dùng DFS.
+
+## 3. Lấy thông tin từ đâu trong code để áp dụng?
+- **Khung bản đồ:** Lưu trữ ở biến `vector<vector<char>> grid`. Ký hiệu `#` là tường, dấu cách là đường đi.
+- **Thuật toán sinh bản đồ:** Nằm ở hàm `generateMazeDFS()`. Áp dụng **Stack** để đi sâu đục tường, đụng ngõ cụt thì lấy (pop) tọa độ cũ ra để quay lui.
+- **Thuật toán tìm đường ngắn nhất:** Nằm ở hàm `solveBFS()`. Áp dụng **Queue** để loang đều ra mọi hướng cùng lúc (như vết dầu loang), đụng đích trước là đường ngắn nhất.
+- **Thuật toán thông minh:** Nằm ở hàm `solveAStar()`. Áp dụng **Priority Queue** để ưu tiên đi vào các ô có xu hướng gần đích nhất (dùng công thức khoảng cách Manhattan).
+
+## 4. Hướng phát triển kế tiếp
+- **Về giao diện:** Thoát khỏi Console, tích hợp các thư viện đồ họa (như SFML/Raylib) để làm game 2D hoàn chỉnh có hình ảnh nhân vật.
+- **Về tính năng:** Thêm cơ chế "Sương mù" (Người chơi chỉ nhìn thấy bán kính 3 ô xung quanh) để tăng độ khó khi tự giải.
+
+## 5. Ghi chú bảo vệ
+Thay vào đó, hãy thẳng thắn thừa nhận có dùng tài liệu cú pháp, nhưng **nắm chắc luồng logic**. 
+
+Chỉ cần nhớ 3 câu "thần chú" này để giải thích bất kỳ đoạn code nào trong các vòng lặp:
+1. Gặp lệnh `push`: "Chỗ này đưa tọa độ ô tiếp theo vào hàng đợi/ngăn xếp để chuẩn bị duyệt."
+2. Gặp lệnh `if (grid[r][c] == '#')`: "Chỗ này check va chạm, nếu là tường thì bỏ qua không đi."
+3. Gặp mảng `visited`: "Chỗ này đánh dấu ô đã đi qua để thuật toán không bị kẹt trong vòng lặp vô hạn."
